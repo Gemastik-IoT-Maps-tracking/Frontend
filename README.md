@@ -32,6 +32,10 @@ npm i axios
 * react-tailwindcss-datepicker by onesine:
 `https://react-tailwindcss-datepicker.vercel.app/`
 
+OR for your time efficiency use
+```bash
+npm i
+```
 Run this command for testing
 ```bash
 npm run dev
