@@ -60,7 +60,7 @@ class MapComponent extends Component {
     const { data, groupedData, warnaMarker } = this.props;
 
     return (
-      <MapContainer center={[-6.354881750178463, 106.84146110607826]} zoom={12} className=''>
+      <MapContainer center={[-6.354881750178463, 106.84146110607826]} zoom={15} className=''>
         <CachedTileLayer 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
           attribution="&copy; <a>Kompres IOT 'Bismillah Juara'</a>" 
