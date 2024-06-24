@@ -52,8 +52,9 @@ function Information() {
               <h3>Project ini dibuat oleh :</h3>
               <div className="grid grid-cols-2 gap-4">
                 <ul>
-                  <li>1. Naufal Maulana Al-Ghifari Irawan - 50420956 - 4IA01</li>
-                  <li>2. Ghiyats Ibnu Syahied - 50421557 - 3IA19</li>
+                  <li>1. Naufal Maulana Al-Ghifari Irawan</li>
+                  <li>2. Ghiyats Ibnu Syahied</li>
+                  <li>2. Muhammad Hauzan Dini Fakhri</li>
                 </ul>
               </div>
               </h2>
