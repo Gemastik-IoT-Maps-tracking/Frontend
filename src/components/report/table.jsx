@@ -172,13 +172,15 @@ function Table() {
 
   return (
     <div className="table-container mx-auto w-full overflow-x-auto">
-      <DataTable
-        columns={columns}
-        data={data}
-        pagination
-        responsive
-        className="data-table w-full"
-      />
+      <div className="data-table-container" style={{ maxHeight: '600px', overflowY: 'auto' }}>
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          responsive
+          className="data-table w-full"
+        />
+      </div>
 
       {showStatusModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
