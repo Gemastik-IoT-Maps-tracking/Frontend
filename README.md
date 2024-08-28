@@ -40,3 +40,7 @@ Run this command for testing
 ```bash
 npm run dev
 ```
+Run the API first
+```bash
+py api.py
+```
