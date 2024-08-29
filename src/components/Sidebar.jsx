@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   Typography,
@@ -13,37 +13,37 @@ import logo from "../icon/ug.png";
 export function DefaultSidebar() {
 
   return (
-    <Card className="h-screen w-full sm:w-1/4 md:w-1/5 lg:w-1/6 p-5 shadow-xl shadow-blue-gray-900/5">
-      <div className="mb-4 p-4">
-        <img src={logo} className="mx-auto w-20 h-auto" alt="Logo" />
-        <Typography className="text-center mt-4" variant="h5" color="blue-gray">
+    <Card className="h-screen w-full sm:w-1/4 md:w-1/5 lg:w-1/6 p-6 bg-white shadow-xl rounded-lg border border-gray-200">
+      <div className="mb-6 p-4">
+        <img src={logo} className="mx-auto w-24 h-auto rounded-full" alt="Logo" />
+        <Typography className="text-center mt-4 text-2xl font-bold text-gray-800">
           Tracking Dashboard
         </Typography>
       </div>
 
       <List>
         <Link to="/">
-          <ListItem>
+          <ListItem className="text-gray-700 hover:bg-gray-200 rounded-lg transition-colors">
             <ListItemPrefix>
-              <MapIcon className="h-5 w-5" />
+              <MapIcon className="h-6 w-6 text-gray-600" />
             </ListItemPrefix>
             Home
           </ListItem>
         </Link>
 
         <Link to="/report">
-          <ListItem>
+          <ListItem className="text-gray-700 hover:bg-gray-200 rounded-lg transition-colors">
             <ListItemPrefix>
-              <InformationCircleIcon className="h-5 w-5" />
+              <InformationCircleIcon className="h-6 w-6 text-gray-600" />
             </ListItemPrefix>
             Data
           </ListItem>
         </Link>
 
         <Link to="/about">
-          <ListItem>
+          <ListItem className="text-gray-700 hover:bg-gray-200 rounded-lg transition-colors">
             <ListItemPrefix>
-              <UserCircleIcon className="h-5 w-5" />
+              <UserCircleIcon className="h-6 w-6 text-gray-600" />
             </ListItemPrefix>
             About
           </ListItem>

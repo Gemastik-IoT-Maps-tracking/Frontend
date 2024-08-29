@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, Marker, Polyline, Tooltip, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Polyline, Tooltip, TileLayer, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import localforage from 'localforage';
 
@@ -24,7 +24,6 @@ class CachedTileLayer extends Component {
         tile.src = url;
         tile.crossOrigin = 'Anonymous';
         tile.onload = () => {
-
           const canvas = document.createElement('canvas');
           canvas.width = tile.naturalWidth;
           canvas.height = tile.naturalHeight;
@@ -56,15 +55,45 @@ class CachedTileLayer extends Component {
 }
 
 class MapComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.mapRef = createRef();
+  }
+
+  handleMarkerClick = (lat, lng) => {
+    const map = this.mapRef.current;
+    if (map != null) {
+      map.setView([lat, lng], 18);  // Zoom ke lokasi marker
+    }
+  };
+
   render() {
     const { data, groupedData, warnaMarker } = this.props;
 
+    // Batas wilayah negara Indonesia
+    const batasIndonesia = [
+      [-10.0, 95.0],  // Pulau Barat (Sumatera)
+      [6.0, 141.0]    // Pulau Timur (Papua)
+    ];
+
     return (
-      <MapContainer center={[-6.354881750178463, 106.84146110607826]} zoom={15} className=''>
+      <MapContainer 
+        bounds={batasIndonesia} 
+        maxBounds={batasIndonesia}
+        maxBoundsViscosity={1.0}
+        zoom={5}
+        minZoom={5} // Max zoom out
+        zoomControl={false}
+        className='rounded-lg shadow-lg'
+        style={{ height: "100vh", width: "100%" }}
+        ref={this.mapRef}
+      >
         <CachedTileLayer 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-          attribution="&copy; <a>Kompres IOT 'Bismillah Juara'</a>" 
+          attribution="&copy; <a>GEMASTIK XVII Piranti Cerdas-'Mulai Aja Dulu'</a>" 
         />
+        
+        <ZoomControl position="bottomright" />
 
         {Object.entries(groupedData).map(([name, polylinePoints], index) => (
           <div key={index}>
@@ -81,16 +110,19 @@ class MapComponent extends Component {
                   position={[titik.Lattitude, titik.Longitude]}
                   icon={new L.Icon({
                     iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${warnaMarker(titik.Status)}.png`,
-                    iconSize: [25, 41],
+                    iconSize: [20, 30],
                   })}
+                  eventHandlers={{
+                    click: () => {
+                      this.handleMarkerClick(titik.Lattitude, titik.Longitude);
+                    },
+                  }}
                 >
                   <Tooltip direction="top" offset={[0, -10]} opacity={1} permanent={false} className="custom-tooltip">
-                    <span>
-                      Data ke-{titik.ID}
+                    <span className="text-sm text-gray-700">
+                      Data ke-{titik.ID},Waktu {titik.Time}
                       <br />
-                      Alat : {titik.Name}
-                      <br />
-                      Status : {titik.Status}
+                      Alat : {titik.Name},Status : {titik.Status}
                       <br />
                       Catatan : {titik.Catatan}
                     </span>
