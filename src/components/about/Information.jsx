@@ -8,61 +8,50 @@ function Information() {
   };
 
   return (
-    <>
-       <div className="w-full p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" role="tablist">
-          <li className="me-2">
-            <button
-              onClick={() => handleTabClick("about")}
-              type="button"
-              className={`inline-block p-4 text-blue-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500 ${activeTab === "about" && "bg-gray-100 dark:bg-gray-700"}`}
-            >
-              About Project
-            </button>
-          </li>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <ul className="flex justify-center mb-4 border-b">
+        <li className="mr-2">
+          <button
+            onClick={() => handleTabClick("about")}
+            className={`py-2 px-4 rounded-t-lg ${activeTab === "about" ? "bg-blue-600 text-white" : "text-blue-600 bg-gray-200"}`}
+          >
+            About Project
+          </button>
+        </li>
+        <li className="mr-2">
+          <button
+            onClick={() => handleTabClick("member")}
+            className={`py-2 px-4 rounded-t-lg ${activeTab === "member" ? "bg-blue-600 text-white" : "text-blue-600 bg-gray-200"}`}
+          >
+            About Us
+          </button>
+        </li>
+      </ul>
 
-          <li className="me-2">
-            <button
-              onClick={() => handleTabClick("parthnership")}
-              type="button"
-              className={`inline-block p-4 text-blue-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500 ${activeTab === "parthnership" && "bg-gray-100 dark:bg-gray-700"}`}
-            >
-              About us
-            </button>
-          </li>
-
-        </ul>
-
-        <div id="defaultTabContent">
-        <div className={`p-5 bg-white rounded-lg md:p-6 dark:bg-gray-800 ${activeTab !== "about" && "hidden"}`} id="about" role="tabpanel" aria-labelledby="about-tab">
-            <div className="">
-              <h2 className="tracking-tight text-gray-900 dark:text-white">
-                    Website dashboard ini merupakan bagian dari IoT project "MAPS TRACKING NAVIGASI TITIK POINT LOKASI UNTUK PENANGGULANGAN PASCA BENCANA"
-              </h2>
-              <br />
-              <h5>
-                Website ini berfungsi untuk menampilkan data dari alat IoT dengan data yang di terima dari MQTT
-              </h5>
-            </div>
+      <div className="p-4">
+        {activeTab === "about" && (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-700">
+              Website dashboard ini merupakan bagian dari IoT project "MAPS TRACKING NAVIGASI TITIK POINT LOKASI UNTUK PENANGGULANGAN PASCA BENCANA"
+            </h2>
+            <p className="mt-4 text-gray-600">
+              Website ini berfungsi untuk menampilkan data dari alat IoT dengan data yang di terima dari MQTT.
+            </p>
           </div>
+        )}
 
-          <div className={`p-5 bg-white rounded-lg md:p-6 dark:bg-gray-800 ${activeTab !== "parthnership" && "hidden"}`} id="partnership" role="tabpanel" aria-labelledby="partnership-tab">
-            <div className="">
-              <h2 className="tracking-tight text-gray-900 dark:text-white">
-              <h3>Project ini dibuat oleh :</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <ul>
-                  <li>1. Naufal Maulana Al-Ghifari Irawan</li>
-                  <li>2. Ghiyats Ibnu Syahied</li>
-                  <li>2. Muhammad Hauzan Dini Fakhri</li>
-                </ul>
-              </div>
-              </h2>
-            </div>
-        </div>
-        </div>
+        {activeTab === "member" && (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-700">Project ini dibuat oleh:</h2>
+            <ul className="list-disc list-inside mt-4 text-gray-600">
+              <li>Naufal Maulana Al-Ghifari Irawan</li>
+              <li>Ghiyats Ibnu Syahied</li>
+              <li>Muhammad Hauzan Dini Fakhri</li>
+            </ul>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -36,7 +36,7 @@ export function DefaultSidebar() {
             <ListItemPrefix>
               <InformationCircleIcon className="h-6 w-6 text-gray-600" />
             </ListItemPrefix>
-            Data
+            Report
           </ListItem>
         </Link>
 

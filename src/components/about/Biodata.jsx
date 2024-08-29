@@ -27,19 +27,19 @@ const githubLinks = [
 
 export function ProfileCard() {
   return (
-    <div className="w-full p-5 bg-white rounded-lg">
+    <div className="bg-white rounded-lg shadow-lg p-6">
       <Typography variant="h3" color="blue-gray" className="text-center mb-6 font-bold">
-        ANGGOTA TIM
+        Anggota Tim
       </Typography>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center gap-4">
         {/* ProfileCard 1 */}
-        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2">
-          <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <CardHeader floated={false} className="h-68 rounded-t-lg overflow-hidden">
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
+          <Card className="w-full shadow-md hover:shadow-lg transition-shadow duration-300">
+            <CardHeader floated={false} className="h-48 rounded-t-lg overflow-hidden">
               <img src={foto1} alt="Naufal Maulana" className="object-cover w-full h-full" />
             </CardHeader>
-            <CardBody className="text-center p-4">
-              <Typography variant="h4" color="blue-gray" className="mb-2 font-semibold">
+            <CardBody className="text-center p-3">
+              <Typography variant="h5" color="blue-gray" className="mb-2 font-semibold">
                 Naufal Maulana
                 <br />Al-Ghifari Irawan
               </Typography>
@@ -47,14 +47,14 @@ export function ProfileCard() {
                 Team Leader
               </Typography>
             </CardBody>
-            <CardFooter className="flex justify-center gap-7 pt-2">
+            <CardFooter className="flex justify-center gap-5 pt-2">
               <Tooltip content="LinkedIn">
                 <a
                   href={linkedInLinks[0]}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={linkedInIcon} alt="LinkedIn" className="w-6 h-6" />
+                  <img src={linkedInIcon} alt="LinkedIn" className="w-5 h-5" />
                 </a>
               </Tooltip>
               <Tooltip content="GitHub">
@@ -63,7 +63,7 @@ export function ProfileCard() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={githubIcon} alt="GitHub" className="w-6 h-6" />
+                  <img src={githubIcon} alt="GitHub" className="w-5 h-5" />
                 </a>
               </Tooltip>
             </CardFooter>
@@ -71,13 +71,13 @@ export function ProfileCard() {
         </div>
 
         {/* ProfileCard 2 */}
-        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2">
-          <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <CardHeader floated={false} className="h-68 rounded-t-lg overflow-hidden">
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
+          <Card className="w-full shadow-md hover:shadow-lg transition-shadow duration-300">
+            <CardHeader floated={false} className="h-48 rounded-t-lg overflow-hidden">
               <img src={foto2} alt="Ghiyats Ibnu Syahied" className="object-cover w-full h-full" />
             </CardHeader>
-            <CardBody className="text-center p-4">
-              <Typography variant="h4" color="blue-gray" className="mb-2 font-semibold">
+            <CardBody className="text-center p-3">
+              <Typography variant="h5" color="blue-gray" className="mb-2 font-semibold">
                 Ghiyats Ibnu
                 <br />Syahied
               </Typography>
@@ -85,14 +85,14 @@ export function ProfileCard() {
                 Team Member
               </Typography>
             </CardBody>
-            <CardFooter className="flex justify-center gap-7 pt-2">
+            <CardFooter className="flex justify-center gap-5 pt-2">
               <Tooltip content="LinkedIn">
                 <a
                   href={linkedInLinks[1]}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={linkedInIcon} alt="LinkedIn" className="w-6 h-6" />
+                  <img src={linkedInIcon} alt="LinkedIn" className="w-5 h-5" />
                 </a>
               </Tooltip>
               <Tooltip content="GitHub">
@@ -101,7 +101,7 @@ export function ProfileCard() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={githubIcon} alt="GitHub" className="w-6 h-6" />
+                  <img src={githubIcon} alt="GitHub" className="w-5 h-5" />
                 </a>
               </Tooltip>
             </CardFooter>
@@ -109,13 +109,13 @@ export function ProfileCard() {
         </div>
 
         {/* ProfileCard 3 */}
-        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2">
-          <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <CardHeader floated={false} className="h-68 rounded-t-lg overflow-hidden">
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
+          <Card className="w-full shadow-md hover:shadow-lg transition-shadow duration-300">
+            <CardHeader floated={false} className="h-48 rounded-t-lg overflow-hidden">
               <img src={foto3} alt="Muhammad Hauzan Dini Fakhri" className="object-cover w-full h-full" />
             </CardHeader>
-            <CardBody className="text-center p-4">
-              <Typography variant="h4" color="blue-gray" className="mb-2 font-semibold">
+            <CardBody className="text-center p-3">
+              <Typography variant="h5" color="blue-gray" className="mb-2 font-semibold">
                 Muhammad Hauzan
                 <br />Dini Fakhri
               </Typography>
@@ -123,14 +123,14 @@ export function ProfileCard() {
                 Team Member
               </Typography>
             </CardBody>
-            <CardFooter className="flex justify-center gap-7 pt-2">
+            <CardFooter className="flex justify-center gap-5 pt-2">
               <Tooltip content="LinkedIn">
                 <a
                   href={linkedInLinks[2]}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={linkedInIcon} alt="LinkedIn" className="w-6 h-6" />
+                  <img src={linkedInIcon} alt="LinkedIn" className="w-5 h-5" />
                 </a>
               </Tooltip>
               <Tooltip content="GitHub">
@@ -139,7 +139,7 @@ export function ProfileCard() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={githubIcon} alt="GitHub" className="w-6 h-6" />
+                  <img src={githubIcon} alt="GitHub" className="w-5 h-5" />
                 </a>
               </Tooltip>
             </CardFooter>
