@@ -6,14 +6,16 @@ import Table from "/src/components/report/table";
 
 function Data() {
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
       <DefaultSidebar />
-      <Card className="flex flex-col flex-grow p-5 shadow-xl shadow-blue-gray-900/5">
-      <div className="flex flex-wrap justify-center p-5">
+      <div className="flex-1 flex flex-col p-5">
+        <div className="flex flex-col gap-5">
           <CardView />
-          <Table />
         </div>
-      </Card>
+          <Card className="w-full h-screen bg-white rounded-lg shadow-lg">
+            <Table />
+          </Card>
+      </div>
     </div>
   );
 }

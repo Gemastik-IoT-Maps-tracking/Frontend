@@ -111,58 +111,75 @@ function Table() {
       name: 'ID',
       selector: row => row.ID,
       sortable: true,
-      width: '5%',
+      width: '10%',
+      cell: row => <span className="font-semibold text-gray-700">{row.ID}</span>,
     },
     {
       name: 'Time',
       selector: row => row.Time,
       sortable: false,
       width: '15%',
+      cell: row => <span className="text-gray-600">{row.Time}</span>,
     },
     {
       name: 'Name',
       selector: row => row.Name,
       sortable: false,
       width: '10%',
+      cell: row => <span className="text-gray-600">{row.Name}</span>,
     },
     {
       name: 'Latitude',
       selector: row => row.Lattitude,
       sortable: false,
       width: '10%',
+      cell: row => <span className="text-gray-600">{row.Lattitude}</span>,
     },
     {
       name: 'Longitude',
       selector: row => row.Longitude,
       sortable: false,
       width: '10%',
+      cell: row => <span className="text-gray-600">{row.Longitude}</span>,
     },
     {
       name: 'Status',
       selector: row => row.Status,
       sortable: false,
-      width: '10%',
+      width: '15%',
+      cell: row => (
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-medium ${
+            row.Status === 'AMAN' ? 'bg-green-100 text-green-800' :
+            row.Status === 'WARNING' ? 'bg-yellow-100 text-yellow-800' :
+            row.Status === 'SOS' ? 'bg-red-100 text-red-800' :
+            'bg-gray-100 text-gray-800'
+          }`}
+        >
+          {row.Status || 'Tanpa Status'}
+        </span>
+      ),
     },
     {
       name: 'Catatan',
       selector: row => row.Catatan,
       sortable: false,
-      cell: row => <div style={{ maxHeight: '100px', overflowY: 'auto' }}>{row.Catatan}</div>,
-      width: '25%',
+      cell: row => <div style={{ maxHeight: '100px', overflowY: 'auto' }} className="text-gray-600">{row.Catatan}</div>,
+      width: '20%',
     },
     {
       name: 'Action',
       button: true,
       cell: row => (
         <div className="flex space-x-2">
-          <button onClick={() => openStatusModal(row)}>
-            <PencilSquareIcon className="h-7 w-7 p-1 bg-blue-600 rounded-md hover:bg-blue-300" />
+          <button onClick={() => openStatusModal(row)} className="hover:scale-105 transform transition-transform">
+            <PencilSquareIcon className="h-7 w-7 p-1 bg-blue-600 text-white rounded-md hover:bg-blue-400" />
           </button>
-          <button onClick={() => openCatatanModal(row)}>
-            <DocumentIcon className="h-7 w-7 p-1 bg-yellow-600 rounded-md hover:bg-yellow-300" />
+          <button onClick={() => openCatatanModal(row)} className="hover:scale-105 transform transition-transform">
+            <DocumentIcon className="h-7 w-7 p-1 bg-yellow-600 text-white rounded-md hover:bg-yellow-400" />
           </button>
-          <button onClick={() => handleDelete(row.ID)}>
-            <TrashIcon className="h-7 w-7 p-1 bg-red-600 rounded-md hover:bg-red-300" />
+          <button onClick={() => handleDelete(row.ID)} className="hover:scale-105 transform transition-transform">
+            <TrashIcon className="h-7 w-7 p-1 bg-red-600 text-white rounded-md hover:bg-red-400" />
           </button>
         </div>
       ),
@@ -172,22 +189,22 @@ function Table() {
 
   return (
     <div className="table-container mx-auto w-full overflow-x-auto">
-      <div className="data-table-container" style={{ maxHeight: '600px', overflowY: 'auto' }}>
+      <div className="data-table-container rounded-lg shadow-lg bg-white p-4" style={{ maxHeight: '600px', overflowY: 'auto' }}>
         <DataTable
           columns={columns}
           data={data}
           pagination
           responsive
-          className="data-table w-full"
+          className="data-table w-full h-full text-gray-700"
         />
       </div>
 
       {showStatusModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-8 rounded-md">
-            <label className="block mb-2 text-sm font-semibold text-gray-600">Update Status</label>
+          <div className="bg-white p-8 rounded-md shadow-lg max-w-sm w-full">
+            <label className="block mb-2 text-lg font-semibold text-gray-700">Update Status</label>
             <select
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md focus:ring-2 focus:ring-blue-500"
               value={newStatus}
               onChange={(e) => setNewStatus(e.target.value === 'null' ? null : e.target.value)}
             >
@@ -199,7 +216,7 @@ function Table() {
             </select>
             <button
               onClick={handleUpdateStatus}
-              className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-300"
+              className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-400"
             >
               Ya
             </button>
@@ -215,13 +232,13 @@ function Table() {
 
       {showDeleteConfirmation && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-8 rounded-md">
-            <p className="mb-4 text-sm font-semibold text-gray-600">
-              Apakah Kamu ingin menghapus data ini ?
+          <div className="bg-white p-8 rounded-md shadow-lg max-w-sm w-full">
+            <p className="mb-4 text-lg font-semibold text-gray-700">
+              Apakah Kamu ingin menghapus data ini?
             </p>
             <button
               onClick={confirmDelete}
-              className="w-full p-2 bg-red-600 text-white rounded-md hover:bg-red-300"
+              className="w-full p-2 bg-red-600 text-white rounded-md hover:bg-red-400"
             >
               Ya
             </button>
@@ -237,16 +254,16 @@ function Table() {
 
       {showCatatanModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-8 rounded-md">
-            <label className="block mb-2 text-sm font-semibold text-gray-600">Update Catatan</label>
+          <div className="bg-white p-8 rounded-md shadow-lg max-w-sm w-full">
+            <label className="block mb-2 text-lg font-semibold text-gray-700">Update Catatan</label>
             <textarea
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md focus:ring-2 focus:ring-yellow-500"
               value={newCatatan}
               onChange={(e) => setNewCatatan(e.target.value)}
             />
             <button
               onClick={handleUpdateCatatan}
-              className="w-full p-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-300"
+              className="w-full p-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-400"
             >
               Ya
             </button>
