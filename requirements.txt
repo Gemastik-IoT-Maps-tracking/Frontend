@@ -1,0 +1,8 @@
+Flask==3.0.3
+Flask_Cors==4.0.1
+folium==0.17.0
+geopy==2.4.1
+mysql_connector_repackaged==0.3.1
+networkx==3.3
+osmnx==1.9.4
+scikit-learn==1.4.2
