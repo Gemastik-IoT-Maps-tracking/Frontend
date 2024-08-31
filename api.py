@@ -9,46 +9,63 @@ app = Flask(__name__)
 CORS(app)
 
 def get_db_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="map-tracking"
-    )
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="gemastik" # Gunain nama Databasenya
+        )
+        print("Database connection successful")
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None
 
 @app.route('/api/get-path', methods=['GET'])
 def get_path():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Ambil data semua perangkat
-    cursor.execute("SELECT ID, Lattitude, Longitude, Name, Status FROM `map-tracking`")
+    # Fetch all devices from the database
+    cursor.execute("SELECT ID, Lattitude, Longitude, Name, Status FROM `map-tracking2`") # Gunain nama Table nya
     all_devices = cursor.fetchall()
 
-    # Filter perangkat dengan status SOS
+    # Fetch the start point where 'awal' is part of the 'Catatan'
+    query = "SELECT Lattitude, Longitude FROM `map-tracking2` WHERE LOWER(TRIM(Catatan)) LIKE %s LIMIT 1"
+    cursor.execute(query, ('%awal%',))
+    start_point_row = cursor.fetchone()
+
+    # Log or print the start_point_row to verify it's being fetched correctly
+    print("Start Point Row:", start_point_row)
+
+    if start_point_row:
+        start_point = (start_point_row[0], start_point_row[1])
+    else:
+        # Fallback if not found
+        start_point = (-7.0503, 110.4091)
+
+
+    # Filter devices with SOS status
     sos_devices = [device for device in all_devices if device[4] == "SOS"]
 
-    # Titik awal di Kampus UNNES (Koordinat UNNES: -7.0503, 110.4091)
-    start_point = (-7.0503, 110.4091)
-
-    # Download peta jalan sekitar UNNES dengan jarak yang lebih besar
-    G = ox.graph_from_point(start_point, dist=5000, network_type='drive')
-
-    # Fungsi untuk mendapatkan node terdekat di graf dari suatu titik
+    # Download the map of roads around the start_point
+    G = ox.graph_from_point(start_point, dist=7000, network_type='all')
+    # Function to get the nearest node in the graph from a point
     def get_nearest_node(graph, point):
         return ox.distance.nearest_nodes(graph, point[1], point[0])
 
-    # Menemukan jalur menggunakan A* dengan fallback ke rute Euclidean jika tidak ditemukan
+    # Find path using A* with fallback to Euclidean route if not found
     def find_path(graph, start, end):
         start_node = get_nearest_node(graph, start)
         end_node = get_nearest_node(graph, end)
         try:
             return nx.astar_path(graph, start_node, end_node, heuristic=lambda u, v: geodesic((graph.nodes[u]['y'], graph.nodes[u]['x']), (graph.nodes[v]['y'], graph.nodes[v]['x'])).m, weight='length')
         except nx.NetworkXNoPath:
-            # Jika tidak ditemukan path, kembalikan garis lurus antara dua titik
+            # If no path is found, return a straight line between the two points
             return [start_node, end_node]
 
-    # Algoritma Greedy untuk menentukan urutan perangkat yang dikunjungi
+    # Greedy algorithm to determine the order of devices to visit
     visited_devices = []
     current_point = start_point
 
@@ -60,7 +77,7 @@ def get_path():
             current_point = (closest_device[1], closest_device[2])
             sos_devices.remove(closest_device)
 
-    # Data yang akan dikirim ke ReactJS
+    # Data to be sent to ReactJS
     response_data = {
         "all_devices": [
             {
@@ -84,7 +101,8 @@ def get_path():
                 "path": [(G.nodes[node]['y'], G.nodes[node]['x']) for node in path]
             }
             for device, path in visited_devices
-        ]
+        ],
+        "start_point": start_point  # Include start_point for debugging
     }
 
     cursor.close()
@@ -93,4 +111,5 @@ def get_path():
     return jsonify(response_data)
 
 if __name__ == '__main__':
+    print("Starting Flask server...")
     app.run(debug=True)
