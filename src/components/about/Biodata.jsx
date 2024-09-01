@@ -44,7 +44,7 @@ export function ProfileCard() {
                 <br />Al-Ghifari Irawan
               </Typography>
               <Typography color="blue-gray" className="font-medium">
-                Team Leader
+                Ketua
               </Typography>
             </CardBody>
             <CardFooter className="flex justify-center gap-5 pt-2">
@@ -82,7 +82,7 @@ export function ProfileCard() {
                 <br />Syahied
               </Typography>
               <Typography color="blue-gray" className="font-medium">
-                Team Member
+                Anggota
               </Typography>
             </CardBody>
             <CardFooter className="flex justify-center gap-5 pt-2">
@@ -120,7 +120,7 @@ export function ProfileCard() {
                 <br />Dini Fakhri
               </Typography>
               <Typography color="blue-gray" className="font-medium">
-                Team Member
+                Anggota
               </Typography>
             </CardBody>
             <CardFooter className="flex justify-center gap-5 pt-2">

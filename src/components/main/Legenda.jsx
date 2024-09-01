@@ -22,6 +22,10 @@ class Legenda extends React.Component {
             <div className="w-4 h-4 mr-3 rounded-full bg-blue-600"></div>
             <span className="text-gray-600">Tanpa Status</span>
           </div>
+          <div className="flex items-center">
+            <div className="w-4 h-4 mr-3 rounded-full bg-black"></div>
+            <span className="text-gray-600">Markas/Server</span>
+          </div>
         </div>
       </div>
     );

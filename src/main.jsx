@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import Report from './pages/report.jsx'
 import About from './pages/about.jsx'
+import SOS from './pages/sos.jsx'
 
 import {
   createBrowserRouter,
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+
+  {
+    path: "/sos",
+    element: <SOS />,
   },
 
   {

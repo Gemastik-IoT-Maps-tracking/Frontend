@@ -15,7 +15,7 @@ function Information() {
             onClick={() => handleTabClick("about")}
             className={`py-2 px-4 rounded-t-lg ${activeTab === "about" ? "bg-blue-600 text-white" : "text-blue-600 bg-gray-200"}`}
           >
-            About Project
+            Tentang Proyek
           </button>
         </li>
         <li className="mr-2">
@@ -23,7 +23,7 @@ function Information() {
             onClick={() => handleTabClick("member")}
             className={`py-2 px-4 rounded-t-lg ${activeTab === "member" ? "bg-blue-600 text-white" : "text-blue-600 bg-gray-200"}`}
           >
-            About Us
+            Tentang Kami
           </button>
         </li>
       </ul>

@@ -60,6 +60,26 @@ class MapComponent extends Component {
     this.mapRef = createRef();
   }
 
+  // Tambahkan fungsi warnaMarker untuk menerima dua parameter: status dan name
+  warnaMarker = (status, name) => {
+    if (name && name.includes("Markas")) {
+      return "black";
+    }
+
+    switch (status) {
+      case 'SOS':
+        return 'red';
+      case 'AMAN':
+        return 'green';
+      case 'WARNING':
+        return 'orange';
+      case 'PENDING':
+        return 'black';
+      default:
+        return 'blue';
+    }
+  };
+
   handleMarkerClick = (lat, lng) => {
     const map = this.mapRef.current;
     if (map != null) {
@@ -68,7 +88,7 @@ class MapComponent extends Component {
   };
 
   render() {
-    const { data, groupedData, warnaMarker } = this.props;
+    const { data, groupedData } = this.props;
 
     // Batas wilayah negara Indonesia
     const batasIndonesia = [
@@ -109,7 +129,7 @@ class MapComponent extends Component {
                   key={titik.id}
                   position={[titik.Lattitude, titik.Longitude]}
                   icon={new L.Icon({
-                    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${warnaMarker(titik.Status)}.png`,
+                    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${this.warnaMarker(titik.Status, titik.Name)}.png`,
                     iconSize: [20, 30],
                   })}
                   eventHandlers={{
