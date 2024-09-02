@@ -70,7 +70,7 @@ class SOSComponent extends Component {
   };
 
   componentDidMount() {
-    fetch('http://localhost:5000/api/get-path')
+    fetch('http://localhost:5000/api/sos-path')
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -97,9 +97,7 @@ class SOSComponent extends Component {
       case 'AMAN':
         return 'green';
       case 'WARNING':
-        return 'orange';
-      case 'PENDING':
-        return 'black';
+        return 'gold';
       default:
         return 'blue';
     }
