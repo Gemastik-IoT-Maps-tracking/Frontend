@@ -58,7 +58,7 @@ class CachedTileLayer extends Component {
 class SOSComponent extends Component {
   constructor(props) {
     super(props);
-    this.mapRef = createRef();  // Membuat referensi peta
+    this.mapRef = createRef();
   }
 
   state = {
@@ -70,22 +70,43 @@ class SOSComponent extends Component {
   };
 
   componentDidMount() {
-    fetch('http://localhost:5000/api/sos-path')
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { latitude, longitude } = position.coords;
+          this.fetchData(latitude, longitude);
+        },
+        error => {
+          console.error("Error fetching device location:", error);
+          this.setState({ loading: false });
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+      this.setState({ loading: false });
+    }
+  }
+
+  fetchData(lat, lon) {
+    fetch(`http://localhost:5000/api/sos-path?lat=${lat}&lon=${lon}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log("Data from API:", data);
         this.setState({ data, loading: false });
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        this.setState({ loading: false });
       });
   }
 
   handleMarkerClick = (lat, lng) => {
     const map = this.mapRef.current;
     if (map != null) {
-      map.setView([lat, lng], 18); // Zoom ke lokasi marker
+      map.setView([lat, lng], 18);
     }
   };
 
-  // Modifikasi fungsi warnaMarker untuk menerima dua parameter: status dan name
   warnaMarker = (status, name) => {
     if (name && name.includes("Markas")) {
       return "black";
@@ -111,20 +132,20 @@ class SOSComponent extends Component {
     }
 
     const batasIndonesia = [
-      [-10.0, 95.0],  // Pulau Barat (Sumatera)
-      [6.0, 141.0]    // Pulau Timur (Papua)
+      [-10.0, 95.0],
+      [6.0, 141.0]
     ];
 
     return (
       <div style={{ position: 'relative' }}>
-        <MapContainer 
-          ref={this.mapRef} 
-          bounds={batasIndonesia} 
+        <MapContainer
+          ref={this.mapRef}
+          bounds={batasIndonesia}
           maxBounds={batasIndonesia}
           maxBoundsViscosity={1.0}
           zoom={5}
-          minZoom={5} 
-          zoomControl={false} 
+          minZoom={5}
+          zoomControl={false}
           style={{ height: '100vh', width: '100%' }}>
           
           <CachedTileLayer 
@@ -134,6 +155,7 @@ class SOSComponent extends Component {
           
           <ZoomControl position="bottomright" />
 
+          {/* Render Semua Marker */}
           {data.all_devices.map((device, index) => (
             <Marker
               key={index}
@@ -150,25 +172,33 @@ class SOSComponent extends Component {
             >
               <Tooltip direction="top" offset={[0, -10]} opacity={1} permanent={false}>
                 <span className="text-sm text-gray-700">
-                  Time: {device.Time}
-                  <br />
-                  Name: {device.Name}
-                  <br />
-                  Status: {device.Status}
+                  {device.Name === "Markas"
+                    ? "Markas" 
+                    : (
+                      <>
+                        Time: {device.Time}
+                        <br />
+                        Name: {device.Name}
+                        <br />
+                        Status: {device.Status}
+                      </>
+                    )}
                 </span>
               </Tooltip>
             </Marker>
           ))}
 
+          {/* Render Polylines */}
           {data.visited_devices.map((visited, index) => (
-              <Polyline
-                  key={index}
-                  positions={visited.path}
-                  color={visited.color}  // Menggunakan warna yang disediakan oleh backend
-              />
+            <Polyline
+              key={index}
+              positions={visited.path}
+              color={visited.color}
+            />
           ))}
         </MapContainer>
 
+        {/* Render Visited Devices
         <div className="fixed bottom-5 right-5 bg-white bg-opacity-90 p-4 rounded-lg shadow-lg max-w-xs max-h-72 overflow-y-auto z-[1000] font-sans text-gray-800">
           <h4 className="text-lg mb-2 text-center text-gray-800 border-b-2 border-gray-300 pb-1">
             Visited Devices
@@ -186,8 +216,7 @@ class SOSComponent extends Component {
               </li>
             ))}
           </ul>
-        </div>
-
+        </div> */}
       </div>
     );
   }

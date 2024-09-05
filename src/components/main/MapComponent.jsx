@@ -68,13 +68,27 @@ class MapComponent extends Component {
   }
 
   componentDidMount() {
-    this.fetchMapData();  // Ambil data saat komponen pertama kali di-mount
+    this.getDeviceLocation(); // Dapatkan lokasi perangkat saat komponen pertama kali di-mount
   }
 
-  // Ambil data dari API Flask
-  fetchMapData = async () => {
+  getDeviceLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.fetchMapData, this.handleLocationError);
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+  handleLocationError = (error) => {
+    console.error("Error fetching device location:", error);
+    this.setState({ loading: false });
+  };
+
+  fetchMapData = async (position) => {
+    const { latitude, longitude } = position.coords;
+
     try {
-      const response = await fetch('http://localhost:5000/api/home-path');
+      const response = await fetch(`http://localhost:5000/api/home-path?lat=${latitude}&lon=${longitude}`);
       const responseData = await response.json();
 
       // Log data respons untuk debug
@@ -96,7 +110,6 @@ class MapComponent extends Component {
     }
   };
 
-  // Tentukan warna marker berdasarkan status dan nama perangkat
   warnaMarker = (status, name) => {
     if (name && name.includes("Markas")) {
       return "black";
@@ -160,7 +173,7 @@ class MapComponent extends Component {
         {/* Render Markers */}
         {data && data.map(titik => (
           <Marker
-            key={titik.ID}
+            key={titik.ID || titik.Name}  // Gunakan Name sebagai key jika ID tidak ada (untuk Markas)
             position={[titik.Lattitude, titik.Longitude]}
             icon={new L.Icon({
               iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${this.warnaMarker(titik.Status, titik.Name)}.png`,
@@ -174,11 +187,18 @@ class MapComponent extends Component {
           >
             <Tooltip direction="top" offset={[0, -10]} opacity={1} permanent={false} className="custom-tooltip">
               <span className="text-sm text-gray-700">
-                Data ke-{titik.ID}, Waktu: {titik.Time}
-                <br />
-                Alat: {titik.Name}, Status: {titik.Status}
-                <br />
-                Catatan: {titik.Catatan}
+                {titik.Name === "Markas" 
+                  ? "Markas" 
+                  : (
+                    <>
+                      Data ke-{titik.ID}, Waktu: {titik.Time}
+                      <br />
+                      Alat: {titik.Name}, Status: {titik.Status}
+                      <br />
+                      Catatan: {titik.Catatan}
+                    </>
+                  )
+                }
               </span>
             </Tooltip>
           </Marker>
