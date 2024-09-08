@@ -130,10 +130,10 @@ function Table() {
     },
     {
       name: 'Latitude',
-      selector: row => row.Lattitude,
+      selector: row => row.Latitude,
       sortable: false,
       width: '10%',
-      cell: row => <span className="text-gray-600">{row.Lattitude}</span>,
+      cell: row => <span className="text-gray-600">{row.Latitude}</span>,
     },
     {
       name: 'Longitude',
@@ -150,8 +150,8 @@ function Table() {
       cell: row => (
         <span
           className={`px-3 py-1 rounded-full text-xs font-medium ${
-            row.Status === 'AMAN' ? 'bg-green-100 text-green-800' :
-            row.Status === 'WARNING' ? 'bg-yellow-100 text-yellow-800' :
+            row.Status === 'Aman' ? 'bg-green-100 text-green-800' :
+            row.Status === 'Warning' ? 'bg-yellow-100 text-yellow-800' :
             row.Status === 'SOS' ? 'bg-red-100 text-red-800' :
             'bg-gray-100 text-gray-800'
           }`}
@@ -209,8 +209,8 @@ function Table() {
               onChange={(e) => setNewStatus(e.target.value === 'null' ? null : e.target.value)}
             >
               <option value="---">Pilih Status</option>
-              <option value="AMAN">AMAN</option>
-              <option value="WARNING">WARNING</option>
+              <option value="Aman">AMAN</option>
+              <option value="Warning">Warning</option>
               <option value="SOS">SOS</option>
               <option value="null">Tanpa Status</option>
             </select>

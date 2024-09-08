@@ -57,6 +57,15 @@ export function SidebarWithBurgerMenu() {
               </ListItem>
             </Link>
 
+            <Link to="/allData">
+              <ListItem className="text-gray-700 hover:bg-gray-200 rounded-lg transition-colors">
+                <ListItemPrefix>
+                  <InformationCircleIcon className="h-6 w-6 text-gray-600" />
+                </ListItemPrefix>
+                Map All
+              </ListItem>
+            </Link>
+
             <Link to="/sos">
               <ListItem className="text-gray-700 hover:bg-gray-200 rounded-lg transition-colors">
                 <ListItemPrefix>

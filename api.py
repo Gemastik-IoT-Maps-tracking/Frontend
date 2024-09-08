@@ -37,10 +37,10 @@ def get_simple_path():
         start_point = (-7.0503, 110.4091)  # Lokasi default jika tidak ada koordinat
 
     # Ambil data perangkat dari database
-    cursor.execute("SELECT ID, Time, Lattitude, Longitude, Name, Status FROM `map-tracking`")
+    cursor.execute("SELECT ID, Time, Latitude, Longitude, Name, Status FROM `map-tracking` WHERE Latitude IS NOT NULL AND Longitude IS NOT NULL")
     all_devices = cursor.fetchall()
 
-    G = ox.graph_from_point(start_point, dist=6000, network_type='all')
+    G = ox.graph_from_point(start_point, dist=7000, network_type='all')
 
     def get_nearest_node(graph, point):
         return ox.distance.nearest_nodes(graph, point[1], point[0])
@@ -94,7 +94,7 @@ def get_simple_path():
             {
                 "ID": device[0],
                 "Time": device[1],
-                "Lattitude": device[2],
+                "Latitude": device[2],
                 "Longitude": device[3],
                 "Name": device[4],
                 "Status": device[5]
@@ -102,7 +102,7 @@ def get_simple_path():
             for device in all_devices
         ] + [
             {
-                "Lattitude": start_point[0],
+                "Latitude": start_point[0],
                 "Longitude": start_point[1],
                 "Name": "Markas"
             }
@@ -131,13 +131,13 @@ def get_path():
         start_point = (-7.0503, 110.4091)  # Lokasi default jika tidak ada koordinat
 
     # Ambil data perangkat dari database
-    cursor.execute("SELECT ID, Time, Lattitude, Longitude, Name, Status FROM `map-tracking`")
+    cursor.execute("SELECT ID, Time, Latitude, Longitude, Name, Status FROM `map-tracking`")
     all_devices = cursor.fetchall()
 
     # Filter perangkat dengan status SOS
     sos_devices = [device for device in all_devices if device[5] == "SOS"]
 
-    G = ox.graph_from_point(start_point, dist=6000, network_type='all')
+    G = ox.graph_from_point(start_point, dist=7000, network_type='all')
 
     def get_nearest_node(graph, point):
         return ox.distance.nearest_nodes(graph, point[1], point[0])
@@ -174,7 +174,7 @@ def get_path():
     response_data = {
         "all_devices": [
             {
-                "Lattitude": start_point[0],
+                "Latitude": start_point[0],
                 "Longitude": start_point[1],
                 "Name": "Markas"
             }
@@ -182,7 +182,7 @@ def get_path():
             {
                 "ID": device[0],
                 "Time": device[1],
-                "Lattitude": device[2],
+                "Latitude": device[2],
                 "Longitude": device[3],
                 "Name": device[4],
                 "Status": device[5]

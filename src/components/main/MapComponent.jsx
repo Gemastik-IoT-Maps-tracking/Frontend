@@ -118,9 +118,9 @@ class MapComponent extends Component {
     switch (status) {
       case 'SOS':
         return 'red';
-      case 'AMAN':
+      case 'Aman':
         return 'green';
-      case 'WARNING':
+      case 'Warning':
         return 'gold';
       default:
         return 'blue';
@@ -160,7 +160,7 @@ class MapComponent extends Component {
       >
         <CachedTileLayer 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-          attribution="&copy; <a>GEMASTIK XVII Piranti Cerdas-'Mulai Aja Dulu'</a>" 
+          attribution="&copy; <a>OpenstreetMap. GEMASTIK XVII Piranti Cerdas-'Mulai Aja Dulu'</a>" 
         />
         
         <ZoomControl position="bottomright" />
@@ -174,14 +174,14 @@ class MapComponent extends Component {
         {data && data.map(titik => (
           <Marker
             key={titik.ID || titik.Name}  // Gunakan Name sebagai key jika ID tidak ada (untuk Markas)
-            position={[titik.Lattitude, titik.Longitude]}
+            position={[titik.Latitude, titik.Longitude]}
             icon={new L.Icon({
               iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${this.warnaMarker(titik.Status, titik.Name)}.png`,
               iconSize: [20, 30],
             })}
             eventHandlers={{
               click: () => {
-                this.handleMarkerClick(titik.Lattitude, titik.Longitude);
+                this.handleMarkerClick(titik.Latitude, titik.Longitude);
               },
             }}
           >

@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import axios from 'axios';
 import Sidebar from "/src/components/Sidebar";
 import Legenda from "/src/components/main/Legenda";
-import MapComponent from "/src/components/main/MapComponent";
+import MapAllComponent from "/src/components/all data/mapAllComponent";
 
 function App() {
-  const [data] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/data/getAll');
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const groupedData = {};
   data.forEach(titik => {
@@ -19,9 +32,9 @@ function App() {
     switch (status) {
       case "SOS":
         return "red";
-      case "WARNING":
+      case "Warning":
         return "gold";
-      case "AMAN":
+      case "Aman":
         return "green";
       default:
         return "blue";
@@ -30,10 +43,10 @@ function App() {
 
   return (
     <>
-      <div className='flex h-screen w-screen bg-gray-100'>
+      <div className='flex h-screen w-screen'>
         <Sidebar />
         <div className="z-10 h-auto w-full">
-          <MapComponent data={data} groupedData={groupedData} warnaMarker={warnaMarker} />
+          <MapAllComponent data={data} groupedData={groupedData} warnaMarker={warnaMarker} />
         </div>
         <Legenda />
       </div>
@@ -42,4 +55,3 @@ function App() {
 }
 
 export default App;
-

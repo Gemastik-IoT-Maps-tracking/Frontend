@@ -12,7 +12,7 @@ function App() {
     if (!groupedData[titik.Name]) {
       groupedData[titik.Name] = [];
     }
-    groupedData[titik.Name].push([titik.Lattitude, titik.Longitude]);
+    groupedData[titik.Name].push([titik.Latitude, titik.Longitude]);
   });
 
   const warnaMarker = (status) => {
