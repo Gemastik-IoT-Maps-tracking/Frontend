@@ -19,9 +19,9 @@ function App() {
     switch (status) {
       case "SOS":
         return "red";
-      case "WARNING":
+      case "Warning":
         return "gold";
-      case "AMAN":
+      case "Aman":
         return "green";
       default:
         return "blue";

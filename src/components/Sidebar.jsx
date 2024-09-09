@@ -62,7 +62,7 @@ export function SidebarWithBurgerMenu() {
                 <ListItemPrefix>
                   <InformationCircleIcon className="h-6 w-6 text-gray-600" />
                 </ListItemPrefix>
-                Map All
+                All Track
               </ListItem>
             </Link>
 

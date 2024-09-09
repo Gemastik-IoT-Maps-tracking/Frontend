@@ -34,8 +34,8 @@ const gstaffLinks = [
 export function ProfileCard() {
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
-      <Typography variant="h3" color="blue-gray" className="text-center mb-6 font-bold">
-        Komposisi Tim
+      <Typography variant="h4" color="blue-gray" className="text-center mb-6 font-bold">
+        Data Tim
       </Typography>
       <div className="flex flex-wrap justify-center gap-4">
         {/* ProfileCard 0 */}
