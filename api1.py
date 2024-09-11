@@ -37,7 +37,7 @@ def get_simple_path():
         start_point = (-7.0503, 110.4091)  # Lokasi default jika tidak ada koordinat
 
     # Ambil data perangkat dari database
-    cursor.execute("SELECT ID, Time, Latitude, Longitude, Name, Status FROM `map-tracking` WHERE Latitude IS NOT NULL AND Longitude IS NOT NULL")
+    cursor.execute("SELECT ID, Time, Latitude, Longitude, Name, Status FROM `map-tracking`")
     all_devices = cursor.fetchall()
 
     G = ox.graph_from_point(start_point, dist=7000, network_type='all')
@@ -131,7 +131,7 @@ def get_path():
         start_point = (-7.0503, 110.4091)  # Lokasi default jika tidak ada koordinat
 
     # Ambil data perangkat dari database
-    cursor.execute("SELECT ID, Time, Latitude, Longitude, Name, Status FROM `map-tracking`")
+    cursor.execute("SELECT ID, Time, Latitude, Longitude, Name, Status FROM `map-tracking` where latitude is not null and longitude is not null")
     all_devices = cursor.fetchall()
 
     # Filter perangkat dengan status SOS
@@ -200,4 +200,4 @@ def get_path():
 
 if __name__ == '__main__':
     print("Starting Flask server...")
-    app.run(debug=True)
+    app.run(port=5000,debug=True)

@@ -88,7 +88,7 @@ class SOSComponent extends Component {
   }
 
   fetchData(lat, lon) {
-    fetch(`http://localhost:5000/api/sos-path?lat=${lat}&lon=${lon}`)
+    fetch(`http://localhost:5001/api/sos-path?lat=${lat}&lon=${lon}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Data from API:", data);

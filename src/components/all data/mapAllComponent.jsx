@@ -77,7 +77,11 @@ class MapAllComponent extends Component {
         this.handleGeolocationError
       );
     } else {
-      this.setState({ error: "Geolocation is not supported by this browser." });
+      this.setState({ 
+        error: "Geolocation is not supported by this browser.", 
+        userPosition: [-6.354881750178463, 106.84146110607826], // Fallback ke posisi default
+        loading: false
+      });
     }
   };
 
@@ -90,8 +94,27 @@ class MapAllComponent extends Component {
   };
 
   handleGeolocationError = (error) => {
+    let errorMessage = '';
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        errorMessage = "Location permission denied by the user.";
+        break;
+      case error.POSITION_UNAVAILABLE:
+        errorMessage = "Location information is unavailable.";
+        break;
+      case error.TIMEOUT:
+        errorMessage = "The request to get user location timed out.";
+        break;
+      default:
+        errorMessage = "An unknown error occurred while fetching location.";
+        break;
+    }
     console.error("Error fetching device location:", error);
-    this.setState({ error: error.message, loading: false });
+    this.setState({ 
+      error: errorMessage,
+      userPosition: [-6.354881750178463, 106.84146110607826], // Fallback ke posisi default
+      loading: false 
+    });
   };
 
   handleMarkerClick = (lat, lng) => {
@@ -107,11 +130,11 @@ class MapAllComponent extends Component {
 
     // Gunakan komponen Loading saat masih loading
     if (loading) {
-      return <Loading />;
+      return <div>Fetching your location, please wait...</div>;
     }
 
     if (error) {
-      return <div>Error: {error}</div>;
+      return <div>Error: {error}. Please enable location services.</div>;
     }
 
     // Batas wilayah Indonesia
